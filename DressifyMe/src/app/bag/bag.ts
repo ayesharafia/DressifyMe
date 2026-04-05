@@ -1,11 +1,20 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { StudioService } from '../../app/service/StudioService';
+import { Router } from '@angular/router';
+
+export interface CustomerDetails {
+  name: string;
+  email: string;
+  contact: string;
+  address: string;
+}
 
 @Component({
   standalone: true,
   selector: 'app-bag',
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './bag.html',
   styleUrls: ['./bag.css'],
 })
@@ -14,35 +23,114 @@ export class Bag {
   successMessage = '';
   errorMessage = '';
 
-  constructor(public studio: StudioService) {}
+  // ── Modal state ─────────────────────────────────────────────────────────────
+  showModal = false;
+  formSubmitted = false;
 
-  removeItem(index: number) {
+  customerDetails: CustomerDetails = this.emptyCustomer();
+
+  // ── Replace with your actual values ─────────────────────────────────────────
+  readonly gpayId = 'yourname@upi';
+  readonly paymentEmail = 'yourname@gmail.com';
+
+  constructor(public studio: StudioService, private router: Router) {}
+
+  // ── Cart ────────────────────────────────────────────────────────────────────
+
+  removeItem(index: number): void {
     this.studio.removeFromCart(index);
     this.successMessage = '';
     this.errorMessage = '';
   }
 
-  placeOrder() {
+  // ── Modal ───────────────────────────────────────────────────────────────────
+
+  openOrderModal(): void {
     if (this.studio.cartItems.length === 0) {
       this.errorMessage = 'Your bag is empty!';
       return;
     }
-
-    this.isLoading = true;
-    this.successMessage = '';
+    this.showModal = true;
+    this.formSubmitted = false;
+    this.customerDetails = this.emptyCustomer();
     this.errorMessage = '';
+    this.successMessage = '';
+  }
 
-    this.studio.submitOrder().subscribe({
-      next: (response) => {
-        this.isLoading = false;
-        this.successMessage = `Order placed successfully for ${this.studio.cartItems.length} item(s)!`;
-        this.studio.cartItems = []; // clear cart after success
-        console.log('Order placed:', response);
-      },
-      error: (err) => {
-        this.isLoading = false;
-        this.errorMessage = 'Failed to place order. Please try again.';
-        console.error('Order error:', err);
-      },
+  closeModal(): void {
+    this.showModal = false;
+    this.formSubmitted = false;
+  }
+
+  closeModalOnBackdrop(event: MouseEvent): void {
+    if ((event.target as HTMLElement).classList.contains('modal-overlay')) {
+      this.closeModal();
+    }
+  }
+
+  // ── Confirm Order ────────────────────────────────────────────────────────────
+
+  confirmOrder(): void {
+    this.formSubmitted = true;
+
+    if (!this.isFormValid()) return;
+
+    console.log('Customer Details:', {
+      name:    this.customerDetails.name,
+      email:   this.customerDetails.email,
+      contact: this.customerDetails.contact,
+      address: this.customerDetails.address,
     });
-  }}
+    console.log('Cart Items:', this.studio.cartItems);
+
+    const name         = this.customerDetails.name;
+    const itemCount    = this.studio.cartItems.length;
+    const gpayId       = this.gpayId;
+    const paymentEmail = this.paymentEmail;
+
+    this.closeModal();
+
+    // setTimeout ensures modal closes and change detection completes
+    // before alert fires — router.navigate runs after user clicks OK
+    setTimeout(() => {
+      alert(
+        `✅ Order Placed Successfully!\n\n` +
+        `Thank you, ${name}! 🎉\n` +
+        `Your order of ${itemCount} item(s) has been placed.\n` +
+        `It will arrive in approximately 1 month.\n\n` +
+        `💳 Please GPay to: ${gpayId}\n` +
+        `📸 Send screenshot to: ${paymentEmail}`
+      );
+
+      this.router.navigate(['/home'], {
+        queryParams: { orderSuccess: 'true' }
+      });
+    }, 150);
+  }
+
+  // ── Validation ──────────────────────────────────────────────────────────────
+
+  isFormValid(): boolean {
+    const { name, email, contact, address } = this.customerDetails;
+    return (
+      !!name &&
+      this.isValidEmail(email) &&
+      this.isValidContact(contact) &&
+      !!address
+    );
+  }
+
+  isValidEmail(email: string): boolean {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  isValidContact(contact: string): boolean {
+    return /^\d{10}$/.test(contact);
+  }
+
+  // ── Helpers ─────────────────────────────────────────────────────────────────
+
+  private emptyCustomer(): CustomerDetails {
+    return { name: '', email: '', contact: '', address: '' };
+  }
+}

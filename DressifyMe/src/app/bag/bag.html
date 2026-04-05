@@ -1,14 +1,13 @@
-<div class = "background-container">
-
+<div class="background-container">
 <div class="bag-container">
 
   <div class="bag-page">
-  <div class="bag-header-card">
-    <h4 class="bag-title">🛍️ Your Bag
-      <span class="bag-count">{{ studio.cartItems.length }} item(s)</span>
-    </h4>
+    <div class="bag-header-card">
+      <h4 class="bag-title">🛍️ Your Bag
+        <span class="bag-count">{{ studio.cartItems.length }} item(s)</span>
+      </h4>
+    </div>
   </div>
-</div>
 
   <!-- Empty State -->
   <div *ngIf="studio.cartItems.length === 0" class="bag-empty">
@@ -19,9 +18,9 @@
   <div *ngFor="let item of studio.cartItems; let i = index" class="bag-card">
 
     <div class="bag-card-header">
-  <span class="item-number">Item #{{ i + 1 }}</span>
-  <button class="btn-remove" (click)="removeItem(i)" title="Remove item">🗑️</button>
-</div>
+      <span class="item-number">Item #{{ i + 1 }}</span>
+      <button class="btn-remove" (click)="removeItem(i)" title="Remove item">🗑️</button>
+    </div>
 
     <div class="bag-card-body">
 
@@ -40,23 +39,20 @@
 
       <!-- Right: Details -->
       <div class="bag-details-section">
-
         <div class="bag-row">
           <span class="bag-label">Cloth Material</span>
           <span class="bag-value">{{ item.materialOption || '—' }}</span>
         </div>
-
         <div class="bag-row">
           <span class="bag-label">Dress Pattern</span>
           <span class="bag-value">{{ item.patternOption || '—' }}</span>
         </div>
-
         <div class="bag-row">
           <span class="bag-label">Dress Size</span>
           <span class="bag-value">{{ item.size || '—' }}</span>
         </div>
-
       </div>
+
     </div>
   </div>
 
@@ -68,10 +64,89 @@
   <button
     *ngIf="studio.cartItems.length > 0"
     class="btn-place-order"
-    (click)="placeOrder()"
+    (click)="openOrderModal()"
     [disabled]="isLoading">
     {{ isLoading ? 'Placing Order...' : 'Place Order (' + studio.cartItems.length + ' items)' }}
   </button>
 
 </div>
+</div>
+
+
+<!-- ── Order Details Modal ──────────────────────────────────────────────────── -->
+<div class="modal-overlay" *ngIf="showModal" (click)="closeModalOnBackdrop($event)">
+  <div class="modal-box">
+
+    <div class="modal-header">
+      <h5 class="modal-title">📦 Enter Your Details</h5>
+      <button class="modal-close" (click)="closeModal()">✕</button>
+    </div>
+
+    <div class="modal-body">
+
+      <div class="modal-note">
+        🕐 Your order will take approximately <strong>1 month</strong> to arrive.<br><br>
+        💳 Please <strong>GPay</strong> your payment to: <strong>{{ gpayId }}</strong><br><br>
+        📸 After payment, send a screenshot to: <strong>{{ paymentEmail }}</strong>
+      </div>
+
+      <!-- Name -->
+      <div class="modal-field">
+        <label>Full Name <span class="required">*</span></label>
+        <input
+          type="text"
+          [(ngModel)]="customerDetails.name"
+          placeholder="e.g. Priya Sharma"
+          [class.input-error]="formSubmitted && !customerDetails.name"
+        />
+        <span class="field-error" *ngIf="formSubmitted && !customerDetails.name">Name is required.</span>
+      </div>
+
+      <!-- Email -->
+      <div class="modal-field">
+        <label>Email ID <span class="required">*</span></label>
+        <input
+          type="email"
+          [(ngModel)]="customerDetails.email"
+          placeholder="e.g. priya@example.com"
+          [class.input-error]="formSubmitted && !isValidEmail(customerDetails.email)"
+        />
+        <span class="field-error" *ngIf="formSubmitted && !isValidEmail(customerDetails.email)">Enter a valid email.</span>
+      </div>
+
+      <!-- Contact -->
+      <div class="modal-field">
+        <label>Contact Number <span class="required">*</span></label>
+        <input
+          type="tel"
+          [(ngModel)]="customerDetails.contact"
+          placeholder="e.g. 9876543210"
+          maxlength="10"
+          [class.input-error]="formSubmitted && !isValidContact(customerDetails.contact)"
+        />
+        <span class="field-error" *ngIf="formSubmitted && !isValidContact(customerDetails.contact)">Enter a valid 10-digit number.</span>
+      </div>
+
+      <!-- Address -->
+      <div class="modal-field">
+        <label>Delivery Address <span class="required">*</span></label>
+        <textarea
+          [(ngModel)]="customerDetails.address"
+          placeholder="House No., Street, City, State, Pincode"
+          rows="3"
+          [class.input-error]="formSubmitted && !customerDetails.address"
+        ></textarea>
+        <span class="field-error" *ngIf="formSubmitted && !customerDetails.address">Address is required.</span>
+      </div>
+
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-cancel" (click)="closeModal()">Cancel</button>
+      <button class="btn-confirm" (click)="confirmOrder()" [disabled]="isLoading">
+        {{ isLoading ? 'Opening Form...' : 'Confirm & Open Order Form' }}
+      </button>
+    </div>
+
+  </div>
 </div>
