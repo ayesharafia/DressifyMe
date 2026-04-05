@@ -1,3 +1,77 @@
 <div class = "background-container">
 
+<div class="bag-container">
+
+  <div class="bag-page">
+  <div class="bag-header-card">
+    <h4 class="bag-title">🛍️ Your Bag
+      <span class="bag-count">{{ studio.cartItems.length }} item(s)</span>
+    </h4>
+  </div>
+</div>
+
+  <!-- Empty State -->
+  <div *ngIf="studio.cartItems.length === 0" class="bag-empty">
+    <p>Your bag is empty. Go to Studio to add items!</p>
+  </div>
+
+  <!-- Cart Items -->
+  <div *ngFor="let item of studio.cartItems; let i = index" class="bag-card">
+
+    <div class="bag-card-header">
+  <span class="item-number">Item #{{ i + 1 }}</span>
+  <button class="btn-remove" (click)="removeItem(i)" title="Remove item">🗑️</button>
+</div>
+
+    <div class="bag-card-body">
+
+      <!-- Left: Design Image -->
+      <div class="bag-image-section">
+        <img
+          *ngIf="item.materialDesignImage; else noImage"
+          [src]="item.materialDesignImage"
+          alt="Design"
+          class="bag-design-img"
+        />
+        <ng-template #noImage>
+          <div class="bag-no-image">No Image</div>
+        </ng-template>
+      </div>
+
+      <!-- Right: Details -->
+      <div class="bag-details-section">
+
+        <div class="bag-row">
+          <span class="bag-label">Cloth Material</span>
+          <span class="bag-value">{{ item.materialOption || '—' }}</span>
+        </div>
+
+        <div class="bag-row">
+          <span class="bag-label">Dress Pattern</span>
+          <span class="bag-value">{{ item.patternOption || '—' }}</span>
+        </div>
+
+        <div class="bag-row">
+          <span class="bag-label">Dress Size</span>
+          <span class="bag-value">{{ item.size || '—' }}</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Feedback Messages -->
+  <p *ngIf="successMessage" class="msg-success">✅ {{ successMessage }}</p>
+  <p *ngIf="errorMessage" class="msg-error">❌ {{ errorMessage }}</p>
+
+  <!-- Place Order Button -->
+  <button
+    *ngIf="studio.cartItems.length > 0"
+    class="btn-place-order"
+    (click)="placeOrder()"
+    [disabled]="isLoading">
+    {{ isLoading ? 'Placing Order...' : 'Place Order (' + studio.cartItems.length + ' items)' }}
+  </button>
+
+</div>
 </div>

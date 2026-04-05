@@ -32,3 +32,68 @@
 }
 
 
+/* ── Size Chart Styles ── Add these to your studio.css ── */
+
+/* Tab buttons */
+.size-tab-btn {
+  color: #555;
+  font-weight: 500;
+}
+.size-tab-btn.active {
+  color: #e91e8c !important;
+  border-bottom: 2px solid #e91e8c !important;
+  background: transparent;
+  font-weight: 600;
+}
+
+/* Table header */
+.size-table-header th {
+  background-color: #fce4f0;
+  color: #333;
+  font-size: 0.82rem;
+  white-space: nowrap;
+}
+
+/* Selected row highlight */
+.size-row-selected {
+  background-color: #fce4f0 !important;
+  font-weight: 600;
+}
+
+/* Radio indicator circle */
+.size-radio-indicator {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+.size-radio-indicator.active {
+  border-color: #e91e8c;
+  background-color: #e91e8c;
+  box-shadow: 0 0 0 3px rgba(233, 30, 140, 0.2);
+}
+
+/* Selected size badge */
+.selected-size-badge {
+  background-color: #e91e8c;
+  font-size: 0.9rem;
+  padding: 6px 16px;
+  border-radius: 20px;
+}
+
+/* Measure tip cards */
+.measure-tip-card {
+  background-color: #fafafa;
+  border: 1px solid #f0d0e3;
+  transition: background 0.2s;
+}
+.measure-tip-card:hover {
+  background-color: #fce4f0;
+}
+.measure-icon {
+  font-size: 1.6rem;
+  line-height: 1;
+}
