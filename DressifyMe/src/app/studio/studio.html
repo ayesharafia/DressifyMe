@@ -40,25 +40,39 @@
             <li><a class="dropdown-item" (click)="selectMaterialOption('Saturn')">Saturn</a></li>
           </ul>
         </div>
+
         <div class="modal-body">Please select the material design:</div>
+
         <div class="scrollable-designs" style="max-height: 300px; overflow-y: auto; padding: 10px; border: 1px solid #ddd; border-radius: 5px; margin: 10px;">
+
+          <!-- Prompt when no material is selected yet -->
+          <p *ngIf="!selectedMaterialOption" class="text-muted small ps-1">
+            Select a material above to see available designs.
+          </p>
+
+          <!-- No designs available for this material -->
+          <p *ngIf="selectedMaterialOption && filteredDesigns.length === 0" class="text-muted small ps-1">
+            No designs available for {{ selectedMaterialOption }}.
+          </p>
+
+          <!-- Filtered design buttons -->
           <div class="d-flex flex-wrap gap-2">
-            <button 
-              class="btn p-1 design-btn" 
-              [class.selected]="selectedMaterialDesign === 'cotton1'"
-              (click)="selectMaterialDesign('cotton1')" 
+            <button
+              *ngFor="let design of filteredDesigns"
+              class="btn p-1 design-btn"
+              [class.selected]="selectedMaterialDesign === design.key"
+              (click)="selectMaterialDesign(design)"
               style="border: 2px solid transparent; background: none; transition: all 0.2s;">
-              <img src="/images/cotton1.png" alt="Cotton Design 1" class="img-fluid rounded" style="width: 80px; height: 80px; object-fit: cover;" />
-            </button>
-            <button 
-              class="btn p-1 design-btn" 
-              [class.selected]="selectedMaterialDesign === 'cotton2'"
-              (click)="selectMaterialDesign('cotton2')" 
-              style="border: 2px solid transparent; background: none; transition: all 0.2s;">
-              <img src="/images/cotton%202.png" alt="Cotton Design 2" class="img-fluid rounded" style="width: 80px; height: 80px; object-fit: cover;" />
+              <img
+                [src]="design.src"
+                [alt]="design.key"
+                class="img-fluid rounded"
+                style="width: 80px; height: 80px; object-fit: cover;" />
             </button>
           </div>
+
         </div>
+
         <div class="modal-footer">
           <button type="button" class="btn btn-success" data-bs-dismiss="modal">Ok</button>
         </div>
@@ -239,17 +253,15 @@
         </div>
 
         <div class="modal-footer">
-          <!-- Size Modal Footer -->
-<div class="modal-footer">
-  <button 
-    type="button" 
-    class="btn btn-success" 
-    data-bs-dismiss="modal"
-    (click)="addToCart()">
-    Add to bag
-  </button>
-</div>
+          <button 
+            type="button" 
+            class="btn btn-success" 
+            data-bs-dismiss="modal"
+            (click)="addToCart()">
+            Add to bag
+          </button>
         </div>
+
       </div>
     </div>
   </div>

@@ -12,16 +12,21 @@ import { StudioService } from '../../app/service/StudioService';
 })
 export class Studio {
     constructor(private studioService: StudioService) {}
- selectMaterialOption(material: string) {
-    this.selectedMaterialOption = material;
-    this.studioService.selectedMaterialOption = material;
-  }
+selectMaterialOption(material: string) {
+  this.selectedMaterialOption = material;
+  this.studioService.selectedMaterialOption = material;
 
-  selectMaterialDesign(design: string) {
-    this.selectedMaterialDesign = design;
-    this.selectedMaterialDesignImage = this.materialDesignImages[design] || null;
-    this.studioService.selectedMaterialDesignImage = this.selectedMaterialDesignImage;
-  }
+  // Reset design when material changes
+  this.selectedMaterialDesign = '';
+  this.selectedMaterialDesignImage = null;
+  this.studioService.selectedMaterialDesignImage = null;
+}
+
+ selectMaterialDesign(design: { key: string; src: string }) {
+  this.selectedMaterialDesign = design.key;
+  this.selectedMaterialDesignImage = design.src;
+  this.studioService.selectedMaterialDesignImage = design.src;
+}
 
   selectPatternOption(pattern: string) {
     this.selectedPatternOption = pattern;
@@ -94,12 +99,27 @@ export class Studio {
     Kaftan: '/images/Kaftan.png',
   };
 
-  materialDesignImages: Record<string, string> = {
-    cotton1: '/images/cotton1.png',
-    cotton2: '/images/cotton%202.png',
-    linen1: '/images/linen1.png',
-    linen2: '/images/linen2.png'
-  };
+ // Replace the flat materialDesignImages map with this grouped one:
+materialDesignImages: Record<string, { key: string; src: string }[]> = {
+  'Cotton 100%': [
+    { key: 'cotton1', src: '/images/cotton1.png' },
+    { key: 'cotton2', src: '/images/cotton%202.png' },
+  ],
+  'Linen': [
+    { key: 'linen1', src: '/images/linen1.png' },
+    { key: 'linen2', src: '/images/linen2.png' },
+  ],
+  'Velvet': [
+    // add your velvet images here, e.g.:
+    // { key: 'velvet1', src: '/images/velvet1.png' },
+  ],
+  // add other materials as needed
+};
+
+// Add this getter below the map:
+get filteredDesigns(): { key: string; src: string }[] {
+  return this.materialDesignImages[this.selectedMaterialOption] ?? [];
+}
 
  
 addToCart() {
