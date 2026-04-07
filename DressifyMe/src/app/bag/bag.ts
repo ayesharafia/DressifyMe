@@ -93,19 +93,21 @@ export class Bag {
     // setTimeout ensures modal closes and change detection completes
     // before alert fires — router.navigate runs after user clicks OK
     setTimeout(() => {
-      alert(
-        `✅ Order Placed Successfully!\n\n` +
-        `Thank you, ${name}! 🎉\n` +
-        `Your order of ${itemCount} item(s) has been placed.\n` +
-        `It will arrive in approximately 1 month.\n\n` +
-        `💳 Please GPay to: ${gpayId}\n` +
-        `📸 Send screenshot to: ${paymentEmail}`
-      );
+  alert(
+    `✅ Order Placed Successfully!\n\n` +
+    `Thank you, ${name}! 🎉\n` +
+    `Your order of ${itemCount} item(s) has been placed.\n` +
+    `It will arrive in approximately 1 month.\n\n` +
+    `💳 Please GPay to: ${gpayId}\n` +
+    `📸 Send screenshot to: ${paymentEmail}`
+  );
 
-      this.router.navigate(['/home'], {
-        queryParams: { orderSuccess: 'true' }
-      });
-    }, 150);
+  this.studio.clearCart(); // 👈 Add this line
+
+  this.router.navigate(['/home'], {
+    queryParams: { orderSuccess: 'true' }
+  });
+}, 150);
   }
 
   // ── Validation ──────────────────────────────────────────────────────────────

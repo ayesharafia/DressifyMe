@@ -47,4 +47,7 @@ export class StudioService {
   submitOrder(): Observable<any> {
     return this.http.post(this.apiUrl, { items: this.cartItems });
   }
+  clearCart(): void {
+  this.cartItems = [];
+}
 }

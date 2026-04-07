@@ -97,6 +97,8 @@ export class Studio {
   materialDesignImages: Record<string, string> = {
     cotton1: '/images/cotton1.png',
     cotton2: '/images/cotton%202.png',
+    linen1: '/images/linen1.png',
+    linen2: '/images/linen2.png'
   };
 
  
