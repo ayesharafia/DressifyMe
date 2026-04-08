@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { StudioService } from '../../app/service/StudioService';
 import { Router } from '@angular/router';
+import { OrderService } from '../../app/service/order.service';
 
 export interface CustomerDetails {
   name: string;
@@ -33,7 +34,7 @@ export class Bag {
   readonly gpayId = 'yourname@upi';
   readonly paymentEmail = 'yourname@gmail.com';
 
-  constructor(public studio: StudioService, private router: Router) {}
+  constructor(public studio: StudioService, private router: Router,  private orderService: OrderService) {}
 
   // ── Cart ────────────────────────────────────────────────────────────────────
 
@@ -69,46 +70,51 @@ export class Bag {
   }
 
   // ── Confirm Order ────────────────────────────────────────────────────────────
+async confirmOrder(): Promise<void> {
+  this.formSubmitted = true;
 
-  confirmOrder(): void {
-    this.formSubmitted = true;
+  if (!this.isFormValid()) return;
 
-    if (!this.isFormValid()) return;
-
-    console.log('Customer Details:', {
-      name:    this.customerDetails.name,
-      email:   this.customerDetails.email,
-      contact: this.customerDetails.contact,
-      address: this.customerDetails.address,
+  try {
+    await this.orderService.saveOrder({
+      name:                        this.customerDetails.name,
+      email:                       this.customerDetails.email,
+      contact:                     this.customerDetails.contact,
+      address:                     this.customerDetails.address,
+      selectedMaterialOption:      this.studio.selectedMaterialOption,
+      selectedMaterialDesign:      this.studio.selectedMaterialDesign,
+      selectedMaterialDesignImage: this.studio.selectedMaterialDesignImage,
+      selectedPatternOption:       this.studio.selectedPatternOption,
+      selectedPatternImage:        this.studio.selectedPatternImage,
     });
-    console.log('Cart Items:', this.studio.cartItems);
-
-    const name         = this.customerDetails.name;
-    const itemCount    = this.studio.cartItems.length;
-    const gpayId       = this.gpayId;
-    const paymentEmail = this.paymentEmail;
-
-    this.closeModal();
-
-    // setTimeout ensures modal closes and change detection completes
-    // before alert fires — router.navigate runs after user clicks OK
-    setTimeout(() => {
-  alert(
-    `✅ Order Placed Successfully!\n\n` +
-    `Thank you, ${name}! 🎉\n` +
-    `Your order of ${itemCount} item(s) has been placed.\n` +
-    `It will arrive in approximately 1 month.\n\n` +
-    `💳 Please GPay to: ${gpayId}\n` +
-    `📸 Send screenshot to: ${paymentEmail}`
-  );
-
-  this.studio.clearCart(); // 👈 Add this line
-
-  this.router.navigate(['/home'], {
-    queryParams: { orderSuccess: 'true' }
-  });
-}, 150);
+  } catch (error) {
+    console.error('Failed to save order:', error);
   }
+
+  const name         = this.customerDetails.name;
+  const itemCount    = this.studio.cartItems.length;
+  const gpayId       = this.gpayId;
+  const paymentEmail = this.paymentEmail;
+
+  this.closeModal();
+
+  setTimeout(() => {
+    alert(
+      `✅ Order Placed Successfully!\n\n` +
+      `Thank you, ${name}! 🎉\n` +
+      `Your order of ${itemCount} item(s) has been placed.\n` +
+      `It will arrive in approximately 1 month.\n\n` +
+      `💳 Please GPay to: ${gpayId}\n` +
+      `📸 Send screenshot to: ${paymentEmail}`
+    );
+
+    this.studio.clearCart();
+
+    this.router.navigate(['/home'], {
+      queryParams: { orderSuccess: 'true' }
+    });
+  }, 150);
+}
 
   // ── Validation ──────────────────────────────────────────────────────────────
 

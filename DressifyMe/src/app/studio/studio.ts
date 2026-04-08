@@ -22,9 +22,10 @@ selectMaterialOption(material: string) {
   this.studioService.selectedMaterialDesignImage = null;
 }
 
- selectMaterialDesign(design: { key: string; src: string }) {
+selectMaterialDesign(design: { key: string; src: string }) {
   this.selectedMaterialDesign = design.key;
   this.selectedMaterialDesignImage = design.src;
+  this.studioService.selectedMaterialDesign = design.key;       // 👈 add
   this.studioService.selectedMaterialDesignImage = design.src;
 }
 
@@ -32,6 +33,8 @@ selectMaterialOption(material: string) {
     this.selectedPatternOption = pattern;
     this.selectedPatternImage = this.patternImages[pattern] || null;
     this.studioService.selectedPatternOption = pattern;
+    this.studioService.selectedPatternImage = this.patternImages[pattern] || null; // 👈 add
+
   }
 
   selectSize(size: string) {

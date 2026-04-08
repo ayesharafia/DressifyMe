@@ -18,6 +18,9 @@ export class StudioService {
   selectedMaterialDesignImage: string | null = null;
   selectedPatternOption: string | null = null;
   selectedSize: string = '';
+  selectedPatternImage: string | null = null; // 👈 add
+  selectedMaterialDesign: string = '';        // 👈 add
+
 
   // Cart
   cartItems: OrderItem[] = [];
