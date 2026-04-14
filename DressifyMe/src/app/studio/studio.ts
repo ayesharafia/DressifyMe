@@ -124,18 +124,27 @@ materialDesignImages: Record<string, { key: string; src: string }[]> = {
     { key: 'rayon04', src: '/images/Rayon04.jpeg' },
     { key: 'rayon05', src: '/images/Rayon05.jpeg' },
   ],
-  'Velvet': [
-    { key: 'velvet01', src: '/images/velvet01.jpeg' },
-    { key: 'velvet02', src: '/images/velvet02.jpeg' },
-    { key: 'velvet03', src: '/images/velvet03.jpeg' },
-    { key: 'velvet04', src: '/images/velvet04.jpeg' },
-    { key: 'velvet05', src: '/images/velvet05.jpeg' },
-    { key: 'velvet06', src: '/images/velvet06.jpeg' },
-    { key: 'velvet07', src: '/images/velvet07.png' },
+  // 'Velvet': [
+  //   { key: 'velvet01', src: '/images/velvet01.jpeg' },
+  //   { key: 'velvet02', src: '/images/velvet02.jpeg' },
+  //   { key: 'velvet03', src: '/images/velvet03.jpeg' },
+  //   { key: 'velvet04', src: '/images/velvet04.jpeg' },
+  //   { key: 'velvet05', src: '/images/velvet05.jpeg' },
+  //   { key: 'velvet06', src: '/images/velvet06.jpeg' },
+  //   { key: 'velvet07', src: '/images/velvet07.png' },
 
     // add your velvet images here, e.g.:
     // { key: 'velvet1', src: '/images/velvet1.png' },
   ],
+  // 'BanarasiSilk': [
+  //   { key: 'banarasisilk01', src: '/images/BanarsiSilk01.jpeg' },
+  //   { key: 'banarasisilk02', src: '/images/BanarsiSilk02.jpeg' },
+  //   { key: 'banarasisilk03', src: '/images/BanarsiSilk03.jpeg' },
+  //   { key: 'banarasisilk04', src: '/images/BanarsiSilk04.jpeg' },
+  //   { key: 'banarasisilk05', src: '/images/BanarsiSilk05.jpeg' },
+  //   { key: 'banarasisilk06', src: '/images/BanarsiSilk06.jpeg' },
+
+  // ]
 };
 
 // Add this getter below the map:
