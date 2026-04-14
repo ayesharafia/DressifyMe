@@ -32,7 +32,7 @@ export class Bag {
 
   // ── Replace with your actual values ─────────────────────────────────────────
   readonly gpayId = 'yourname@upi';
-  readonly paymentEmail = 'yourname@gmail.com';
+  readonly paymentWhatsApp = '918485825939';
 
   constructor(public studio: StudioService, private router: Router,  private orderService: OrderService) {}
 
@@ -91,10 +91,10 @@ async confirmOrder(): Promise<void> {
     console.error('Failed to save order:', error);
   }
 
-  const name         = this.customerDetails.name;
-  const itemCount    = this.studio.cartItems.length;
-  const gpayId       = this.gpayId;
-  const paymentEmail = this.paymentEmail;
+  const name             = this.customerDetails.name;
+  const itemCount        = this.studio.cartItems.length;
+  const gpayId           = this.gpayId;
+  const paymentWhatsApp  = this.paymentWhatsApp;
 
   this.closeModal();
 
@@ -105,7 +105,7 @@ async confirmOrder(): Promise<void> {
       `Your order of ${itemCount} item(s) has been placed.\n` +
       `It will arrive in approximately 1 month.\n\n` +
       `💳 Please GPay to: ${gpayId}\n` +
-      `📸 Send screenshot to: ${paymentEmail}`
+      `📸 Send screenshot on WhatsApp: +${paymentWhatsApp}`
     );
 
     this.studio.clearCart();
@@ -123,7 +123,7 @@ async confirmOrder(): Promise<void> {
     return (
       !!name &&
       this.isValidEmail(email) &&
-      this.isValidContact(contact) &&
+      !!contact &&
       !!address
     );
   }

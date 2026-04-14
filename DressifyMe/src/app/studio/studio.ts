@@ -104,19 +104,47 @@ selectMaterialDesign(design: { key: string; src: string }) {
 
  // Replace the flat materialDesignImages map with this grouped one:
 materialDesignImages: Record<string, { key: string; src: string }[]> = {
-  'Cotton 100%': [
-    { key: 'cotton1', src: '/images/cotton1.png' },
-    { key: 'cotton2', src: '/images/cotton%202.png' },
+  'Cotton': [
+    { key: 'cotton01', src: '/images/cotton01.jpeg' },
+    { key: 'cotton02', src: '/images/cotton02.jpeg' },
+    { key: 'cotton03', src: '/images/cotton03.jpeg' },
+    { key: 'cotton04', src: '/images/cotton04.jpeg' },
+    { key: 'cotton05', src: '/images/cotton05.jpeg' },
+    { key: 'cotton06', src: '/images/cotton06.jpeg' },
+    { key: 'cotton07', src: '/images/cotton07.jpeg' },
+    { key: 'cotton08', src: '/images/cotton08.jpeg' },
+    { key: 'cotton09', src: '/images/cotton09.jpeg' },
+    { key: 'cotton10', src: '/images/cotton10.jpeg' },
+    { key: 'cotton11', src: '/images/cotton11.jpeg' },
   ],
-  'Linen': [
-    { key: 'linen1', src: '/images/linen1.png' },
-    { key: 'linen2', src: '/images/linen2.png' },
+  'Rayon': [
+    { key: 'rayon01', src: '/images/Rayon01.jpeg' },
+    { key: 'rayon02', src: '/images/Rayon02.jpeg' },
+    { key: 'rayon03', src: '/images/Rayon03.jpeg' },
+    { key: 'rayon04', src: '/images/Rayon04.jpeg' },
+    { key: 'rayon05', src: '/images/Rayon05.jpeg' },
   ],
   'Velvet': [
+    { key: 'velvet01', src: '/images/velvet01.jpeg' },
+    { key: 'velvet02', src: '/images/velvet02.jpeg' },
+    { key: 'velvet03', src: '/images/velvet03.jpeg' },
+    { key: 'velvet04', src: '/images/velvet04.jpeg' },
+    { key: 'velvet05', src: '/images/velvet05.jpeg' },
+    { key: 'velvet06', src: '/images/velvet06.jpeg' },
+    { key: 'velvet07', src: '/images/velvet07.png' },
+
     // add your velvet images here, e.g.:
     // { key: 'velvet1', src: '/images/velvet1.png' },
   ],
-  // add other materials as needed
+  'BanarasiSilk': [
+    { key: 'banarasisilk01', src: '/images/BanarsiSilk01.jpeg' },
+    { key: 'banarasisilk02', src: '/images/BanarsiSilk02.jpeg' },
+    { key: 'banarasisilk03', src: '/images/BanarsiSilk03.jpeg' },
+    { key: 'banarasisilk04', src: '/images/BanarsiSilk04.jpeg' },
+    { key: 'banarasisilk05', src: '/images/BanarsiSilk05.jpeg' },
+    { key: 'banarasisilk06', src: '/images/BanarsiSilk06.jpeg' },
+
+  ]
 };
 
 // Add this getter below the map:
