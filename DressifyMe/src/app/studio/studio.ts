@@ -136,15 +136,6 @@ materialDesignImages: Record<string, { key: string; src: string }[]> = {
     // add your velvet images here, e.g.:
     // { key: 'velvet1', src: '/images/velvet1.png' },
   ],
-  'BanarasiSilk': [
-    { key: 'banarasisilk01', src: '/images/BanarsiSilk01.jpeg' },
-    { key: 'banarasisilk02', src: '/images/BanarsiSilk02.jpeg' },
-    { key: 'banarasisilk03', src: '/images/BanarsiSilk03.jpeg' },
-    { key: 'banarasisilk04', src: '/images/BanarsiSilk04.jpeg' },
-    { key: 'banarasisilk05', src: '/images/BanarsiSilk05.jpeg' },
-    { key: 'banarasisilk06', src: '/images/BanarsiSilk06.jpeg' },
-
-  ]
 };
 
 // Add this getter below the map:
