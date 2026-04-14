@@ -135,7 +135,7 @@ materialDesignImages: Record<string, { key: string; src: string }[]> = {
 
     // add your velvet images here, e.g.:
     // { key: 'velvet1', src: '/images/velvet1.png' },
-  ],
+  // ],
   // 'BanarasiSilk': [
   //   { key: 'banarasisilk01', src: '/images/BanarsiSilk01.jpeg' },
   //   { key: 'banarasisilk02', src: '/images/BanarsiSilk02.jpeg' },
