@@ -4,8 +4,10 @@ import { Observable } from 'rxjs';
 
 export interface OrderItem {
   materialOption: string;
+  materialDesign: string;
   materialDesignImage: string | null;
   patternOption: string | null;
+  patternImage: string | null;
   size: string;
 }
 
@@ -29,15 +31,18 @@ export class StudioService {
 
   addToCart() {
     const item: OrderItem = {
-      materialOption: this.selectedMaterialOption,
-      materialDesignImage: this.selectedMaterialDesignImage,
-      patternOption: this.selectedPatternOption,
-      size: this.selectedSize,
+      materialOption:      this.selectedMaterialOption,
+    materialDesign:      this.selectedMaterialDesign,       // ← must be here
+    materialDesignImage: this.selectedMaterialDesignImage,
+    patternOption:       this.selectedPatternOption,
+    patternImage:        this.selectedPatternImage,         // ← must be here
+    size:                this.selectedSize,
     };
     this.cartItems.push(item);
 
     // Reset selections after adding
     this.selectedMaterialOption = '';
+    this.selectedMaterialDesign = '';
     this.selectedMaterialDesignImage = null;
     this.selectedPatternOption = null;
     this.selectedSize = '';
