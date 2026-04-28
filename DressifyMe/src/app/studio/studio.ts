@@ -152,18 +152,30 @@ export class Studio {
   }
 
   addToCart() {
-    if (
-      !this.selectedMaterialOption ||
-      !this.selectedPatternOption ||
-      !this.selectedSize
-    ) {
-      alert('Please select Material, Pattern, and Size before adding to bag.');
-      return;
-    }
-    this.studioService.addToCart();
-    alert('Item added to bag!');
-    this.router.navigate(['/bag']);
+  if (!this.selectedMaterialOption) {
+    alert('Please select a Material before adding to bag.');
+    return;
   }
+
+  if (!this.selectedMaterialDesign) {
+    alert('Please select a Material Design before adding to bag.');
+    return;
+  }
+
+  if (!this.selectedPatternOption) {
+    alert('Please select a Pattern before adding to bag.');
+    return;
+  }
+
+  if (!this.selectedSize) {
+    alert('Please select a Size before adding to bag.');
+    return;
+  }
+
+  this.studioService.addToCart();
+  alert('Item added to bag!');
+  this.router.navigate(['/bag']);
+}
 
   setSizeUnit(unit: 'in' | 'cm') {
     this.sizeUnit = unit;
